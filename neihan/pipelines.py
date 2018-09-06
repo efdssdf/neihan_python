@@ -20,8 +20,7 @@ class NeihanPipeline(object):
 
     def process_item(self, item, spider):
         data = dict(item)
-        if not self.post.find(data):
-            self.post.insert(data)
+        self.post.insert(data)
         return item
 
 class DuplicatesPipeline(object):
