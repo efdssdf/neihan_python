@@ -20,7 +20,8 @@ class NeihanPipeline(object):
 
     def process_item(self, item, spider):
         data = dict(item)
-        self.post.insert(data)
+        if not self.post.find_one({"thumbnail":data['thumbnail']}):
+            self.post.insert(data)
         return item
 
 class DuplicatesPipeline(object):

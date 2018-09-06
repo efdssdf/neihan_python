@@ -26,17 +26,20 @@ ITEM_PIPELINES = {
    'neihan.pipelines.DuplicatesPipeline': 350,
 }
 # MONGODB 主机名
+# MONGODB_HOST = "127.0.0.1"
 MONGODB_HOST = "dds-2ze36af17eb05c042440-pub.mongodb.rds.aliyuncs.com"
 # MONGODB 端口号
+# MONGODB_PORT = 27017
 MONGODB_PORT = 3717
 #用户名
 MONGO_USER = "mingxing"
 #密码
 MONGO_PSW = "liujiazhi88"
 # 数据库名称
+# MONGODB_DBNAME = "Neihan"
 MONGODB_DBNAME = "mingxingshuo_gif"
 # 存放数据的表名称
-MONGODB_NEIHANNAME = "neihan"
+MONGODB_NEIHANNAME = "neihans"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
