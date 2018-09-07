@@ -36,8 +36,8 @@ MONGO_USER = "mingxing"
 #密码
 MONGO_PSW = "liujiazhi88"
 # 数据库名称
-MONGODB_DBNAME = "Neihan"
-# MONGODB_DBNAME = "mingxingshuo_gif"
+# MONGODB_DBNAME = "Neihan"
+MONGODB_DBNAME = "mingxingshuo_gif"
 # 存放数据的表名称
 MONGODB_NEIHANNAME = "neihans"
 
