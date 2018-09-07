@@ -23,7 +23,7 @@ ROBOTSTXT_OBEY = True
 
 ITEM_PIPELINES = {
    'neihan.pipelines.NeihanPipeline': 300,
-   'neihan.pipelines.DuplicatesPipeline': 350,
+   # 'neihan.pipelines.DuplicatesPipeline': 350,
 }
 # MONGODB 主机名
 # MONGODB_HOST = "127.0.0.1"
@@ -36,8 +36,8 @@ MONGO_USER = "mingxing"
 #密码
 MONGO_PSW = "liujiazhi88"
 # 数据库名称
-# MONGODB_DBNAME = "Neihan"
-MONGODB_DBNAME = "mingxingshuo_gif"
+MONGODB_DBNAME = "Neihan"
+# MONGODB_DBNAME = "mingxingshuo_gif"
 # 存放数据的表名称
 MONGODB_NEIHANNAME = "neihans"
 

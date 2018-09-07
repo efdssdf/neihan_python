@@ -12,7 +12,7 @@ class NeihanPipeline(object):
         # 创建MONGODB数据库链接
         client = pymongo.MongoClient(host=host, port=port)
         # 数据库登录需要帐号密码的话
-        client.mingxingshuo_gif.authenticate(settings['MONGO_USER'], settings['MONGO_PSW'])
+        # client.mingxingshuo_gif.authenticate(settings['MONGO_USER'], settings['MONGO_PSW'])
         # 指定数据库
         mydb = client[dbname]
         # 存放数据的数据库表名

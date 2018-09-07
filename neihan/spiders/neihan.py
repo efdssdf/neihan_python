@@ -4,6 +4,7 @@ import scrapy
 import datetime
 import time
 from neihan.items import NeihanItem
+import random
 
 class QuotesSpider(scrapy.Spider):
     name = "neihan"
@@ -22,6 +23,8 @@ class QuotesSpider(scrapy.Spider):
             item['title'] = i['title']
             item['thumbnail'] = i['thumbnail']
             item['createAt'] = mktime
+            item['source'] = 'neihan'
+            item['count'] = random.randint(200,1000)
             yield item
         else:
             if len(d['articles'])>0:
