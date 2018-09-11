@@ -13,24 +13,26 @@ class QuotesSpider(scrapy.Spider):
 
     def start_requests(self):
         url = "http://www.gaoxiaogif.cn/"
-        yield scrapy.Request(url=url,callback=self.parse,dont_filter=True)
+        yield scrapy.Request(url=url,callback=self.parse)
 
     def parse(self, response):
-        d = response.body.decode('utf-8')
-        a = Selector(text=d).xpath('//body/div[@class="site-w index clearfix"]/div[@class="col1"]/div/ul/li').re()
-        print(a,'--------------------------')
-        # for i in d['data']:
-        #     mktime = time.mktime(datetime.datetime.now().timetuple())
-        #     item = NeihanItem()
-        #     item['title'] = ''
-        #     item['thumbnail'] = i['img']
-        #     item['createAt'] = mktime
-        #     item['source'] = 'gaoxiaogif'
-        #     item['count'] = random.randint(200,1000)
-        #     yield item
-        # else:
-        #     if len(d['data'])>0:
-        #         url = "https://video.beanmedia.cn/api/gifs?format=json"
-        #         yield scrapy.Request(url=url,callback=self.parse,dont_filter=True)
-        #     else:
-        #         print('end')
+        data = response.body
+        links = Selector(text=data).xpath('//body/div[@class="site-w index clearfix"]/div[@class="col1"]/div/ul/li')
+        next_page = Selector(text=data).xpath('//body/div[@class="site-w index clearfix"]/div[@class="col1"]/div/div[@class="pager"]/a[@class="next"]/@href').extract()
+        for link in links:
+            b = link.xpath('p/span[@class="showtxt"]').extract()
+            if len(b) >0:
+                mktime = time.mktime(datetime.datetime.now().timetuple())
+                item = NeihanItem()
+                item['title'] = b[0][b[0].find('>')+1:b[0].find('</')].replace('\r\n','')
+                item['thumbnail'] = link.xpath('p[@class="img"]/a/img/@data-original').extract()[0].replace('\r\n','')
+                item['createAt'] = mktime
+                item['source'] = 'gaoxiaogif'
+                item['count'] = random.randint(200,1000)
+                yield item
+        else:
+            if len(next_page)>0:
+                url = "http://www.gaoxiaogif.cn"+next_page[0]
+                yield scrapy.Request(url=url,callback=self.parse)
+            else:
+                print('end')
