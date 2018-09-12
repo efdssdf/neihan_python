@@ -5,6 +5,7 @@ import datetime
 import time
 from neihan.items import NeihanItem
 import random
+n=0
 
 class QuotesSpider(scrapy.Spider):
     name = "neihan"
@@ -16,6 +17,7 @@ class QuotesSpider(scrapy.Spider):
 
 
     def parse(self, response):
+        n+=1
         d = eval(response.body)
         for i in d['articles']:
             mktime = time.mktime(datetime.datetime.now().timetuple())
@@ -27,7 +29,7 @@ class QuotesSpider(scrapy.Spider):
             item['count'] = random.randint(200,1000)
             yield item
         else:
-            if len(d['articles'])>0:
+            if len(d['articles'])>0 and n<10:
                 headers= {"referer": "https://servicewechat.com/wx1222e7fa11ef63b0/9/page-frame.html"}
                 url = "https://funny-joke.huazhuanapp.top/api/articles?ci=49ee7e40-28f5-cb60-4813-fb353a825574&cp=w&cv=1.3.0&cursor="+d['cursor'].replace('=','')+"%3D"
                 yield scrapy.Request(url=url,headers=headers,callback=self.parse)
