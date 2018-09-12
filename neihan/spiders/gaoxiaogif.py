@@ -7,6 +7,7 @@ import datetime
 import time
 from neihan.items import NeihanItem
 import random
+n=0
 
 class QuotesSpider(scrapy.Spider):
     name = "gaoxiaogif"
@@ -16,6 +17,7 @@ class QuotesSpider(scrapy.Spider):
         yield scrapy.Request(url=url,callback=self.parse)
 
     def parse(self, response):
+        n+=1
         data = response.body
         links = Selector(text=data).xpath('//body/div[@class="site-w index clearfix"]/div[@class="col1"]/div/ul/li')
         next_page = Selector(text=data).xpath('//body/div[@class="site-w index clearfix"]/div[@class="col1"]/div/div[@class="pager"]/a[@class="next"]/@href').extract()
@@ -31,7 +33,7 @@ class QuotesSpider(scrapy.Spider):
                 item['count'] = random.randint(200,1000)
                 yield item
         else:
-            if len(next_page)>0:
+            if len(next_page)>0 and n<10:
                 url = "http://www.gaoxiaogif.cn"+next_page[0]
                 yield scrapy.Request(url=url,callback=self.parse)
             else:

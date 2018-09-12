@@ -25,16 +25,17 @@ class QuotesSpider(scrapy.Spider):
         page+=1
         d = eval(response.body.decode('utf-8').replace('true','"true"').replace('\\n',''))
         for i in d['data']:
-            mktime = time.mktime(datetime.datetime.now().timetuple())
-            item = NeihanItem()
-            item['title'] = i['itemView']['content']
-            item['thumbnail'] = i['itemView']['gifPath']
-            item['createAt'] = mktime
-            item['source'] = 'jiefu'
-            item['count'] = random.randint(200,1000)
-            yield item
+            if i['itemView']['gifPath'].find('mp4')<0:
+                mktime = time.mktime(datetime.datetime.now().timetuple())
+                item = NeihanItem()
+                item['title'] = i['itemView']['content']
+                item['thumbnail'] = i['itemView']['gifPath']
+                item['createAt'] = mktime
+                item['source'] = 'jiefu'
+                item['count'] = random.randint(200,1000)
+                yield item
         else:
-            if len(d['data'])>0:
+            if len(d['data'])>0 and page<10:
                 yield scrapy.FormRequest(
                     url = "http://api.jiefu.tv/app2/api/article/list.html",
                     headers = {"Content-Type": "application/x-www-form-urlencoded"},
